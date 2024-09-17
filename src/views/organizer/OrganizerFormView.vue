@@ -1,30 +1,25 @@
 <script setup lang="ts">
-import type { Event } from '@/types'
+import type { Organizer } from '@/types'
 import { ref } from 'vue'
-import EventService from '@/services/EventService'
+import OrganizerService from '@/services/OrganizerService'
 import { useRouter } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
 
-const event = ref<Event>({
-  id: 0,
-  title: '',
-  category: '',
-  description: '',
-  location: '',
-  date: '',
-  time: '',
-  petsAllowed: false,
-  organizer: ''
+const organizer = ref<Organizer>({
+  id:0,
+  name: '',
+  address: '',
+  organizationName: ''
 })
 
 const router = useRouter()
 const store = useMessageStore()
 
 function submitForm(){
-    EventService.saveEvent(event.value)
+    OrganizerService.saveOragnizer(organizer.value)
     .then((response) => {
-      router.push({ name: 'event-detail-view',params:{ id: response.data.id} })
-      store.updateMessage('Event was created successfully for '+ response.data.title)
+      router.push({ name: 'organizer-detail-view',params:{ id: response.data.id} })
+      store.updateMessage('Organizer was created successfully for '+ response.data.title)
       setTimeout(() => {
         store.resetMessage()
       }, 3000)
@@ -38,21 +33,17 @@ function submitForm(){
   <div>
     <h1>Create an event</h1>
     <form @submit.prevent="submitForm">
-      <label>Category</label>
-      <input v-model="event.category" type="text" placeholder="Category" class="field" />
-      <h3>Name & describe your event</h3>
-      <label>Title</label>
-      <input v-model="event.title" type="text" placeholder="Title" class="field" />
-      <label>Description</label>
-      <input v-model="event.description" type="text" placeholder="Description" class="field" />
-      <h3>What is your event?</h3>
+      <label>name</label>
+      <input v-model="organizer.name" type="text" placeholder="name" class="field" />
+      <h3>Name and Location of your organization</h3>
+      <label>Organization Name</label>
+      <input v-model="organizer.organizationName" type="text" placeholder="Organization Name" class="field" />
       <label>Location</label>
-      <input v-model="event.location" type="text" placeholder="Location" class="field" />
-      <label>Organizer</label>
-      <input v-model="event.organizer" type="text" placeholder="Organizer" class="field" />
+      <input v-model="organizer.address" type="text" placeholder="Location" class="field" />
+     
       <button class="button" type="submit">Submit</button>
     </form>
-    <pre>{{ event }}</pre>
+    <pre>{{ organizer }}</pre>
   </div>
 </template>
 
