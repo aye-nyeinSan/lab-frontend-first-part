@@ -13,7 +13,7 @@ defineProps<{
       class="cursor-pointer border border-gray-600 p-[20px] w-[250px] mb-[18px] hover:scale-101 hover:shadow-sp"
     >
       <h2 v-if="organizer">{{ organizer.name }}</h2>
-      <span>@{{ organizer.organizationName }} on {{ organizer.address}}</span>
+     
     </div>
   </RouterLink>
 </template>

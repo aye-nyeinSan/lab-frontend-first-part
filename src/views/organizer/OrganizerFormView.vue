@@ -8,8 +8,6 @@ import { useMessageStore } from '@/stores/message'
 const organizer = ref<Organizer>({
   id:0,
   name: '',
-  address: '',
-  organizationName: ''
 })
 
 const router = useRouter()
@@ -35,11 +33,8 @@ function submitForm(){
     <form @submit.prevent="submitForm">
       <label>name</label>
       <input v-model="organizer.name" type="text" placeholder="name" class="field" />
-      <h3>Name and Location of your organization</h3>
-      <label>Organization Name</label>
-      <input v-model="organizer.organizationName" type="text" placeholder="Organization Name" class="field" />
-      <label>Location</label>
-      <input v-model="organizer.address" type="text" placeholder="Location" class="field" />
+   
+
      
       <button class="button" type="submit">Submit</button>
     </form>
