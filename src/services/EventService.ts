@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -18,5 +18,9 @@ export default {
   },
   saveEvent(event: Event){
     return apiClient.post('/events', event)
+  },
+  getEventsByKeyword(keyword: string, perPage: Number, page: Number) : 
+  Promise<AxiosResponse<EventItem[]>> {
+    return apiClient.get<EventItem[]>('/events?title='+keyword+'&_limit=' + perPage + '&_page=' + page)
   }
 }
