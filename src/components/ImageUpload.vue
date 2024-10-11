@@ -24,7 +24,7 @@ const convertMediaToString = (media:any):string[] =>{
     return output
 }
 const media = ref(convertStringToMedia(props.modelValue))
-const uploadUrl = ref(import.meta.env.VTE_UPLOAD_URL)
+const uploadUrl = ref(import.meta.env.VITE_UPLOAD_URL)
 const onChanged = (files: any)=>{
     emit('update:modelValue',convertMediaToString(files))
 }
