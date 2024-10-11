@@ -19,6 +19,7 @@ import { useEventStore } from '@/stores/event'
 import { useOrganizerStore } from '@/stores/organizer'
 import AddEventView from '@/views/event/EventFormView.vue'
 import AddOrganizerView from '@/views/organizer/OrganizerFormView.vue'
+import LoginView from '@/views/LoginView.vue'
 
 
 const router = createRouter({
@@ -133,6 +134,11 @@ const router = createRouter({
           props: true
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
     },
     {
       path: '/network-error',

@@ -1,0 +1,12 @@
+<script setup lang="ts">
+interface ErrorMessageProps{
+    id : string
+}
+
+defineProps<ErrorMessageProps>()
+</script>
+<template>
+    <p aria-live="assertive" role="alert" class="errorMessage" :id="id" >
+        <slot></slot>
+    </p>
+</template>
