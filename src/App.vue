@@ -47,7 +47,7 @@ else {
         <nav class="flex">
           <ul  v-if="!authStore.currentUserName" class ="flex navbar-nav ml-auto">
             <li class="nav-item px-2">
-              <router-link to="/register" class="nav-link">
+              <router-link to="/signup" class="nav-link">
                 <div class="flex items-center">
                   <SvgIcon type="mdi" :path="mdiAccountPlus"/>
                   <span class="ml-3">Sign Up</span>
