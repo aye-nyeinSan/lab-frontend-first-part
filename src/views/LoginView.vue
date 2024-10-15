@@ -11,10 +11,10 @@ const messageStore = useMessageStore();
 
 const authStore = useAuthStore();
 const validationSchema = yup.object({
-    email: yup.string().required('The email is required').email('Input must be an email'),
-    password: yup.string().required('The password is required').min(6,'Password must be at least 6 characters')
+    email: yup.string().required('The email is required'),
+    password: yup.string().required('The password is required')
 })
-const {errors,handleSubmit}= useForm({
+const {errors, handleSubmit}= useForm({
     validationSchema,
     initialValues:{
         email:'',
@@ -25,17 +25,19 @@ const {value:email} = useField<string>('email')
 const {value:password} = useField<string>('password')
 const router = useRouter();
 const onSubmit = handleSubmit((values)=>{
+    console.log("Form submitted: ",values.email,values.password);
+    
     authStore.login(values.email, values.password)
     .then(()=>{
-        console.log('Login successful');
+       // console.log('Login successful');
         router.push({name:'event-list-view'})
     })
-    .catch(()=>{
+    .catch((error)=>{
         messageStore.updateMessage('Login failed');
         setTimeout(()=>{
             messageStore.resetMessage();
         },3000)
-        console.log('Login failed',error);
+       // console.log('Login failed',error);
     })
 })
 </script>
@@ -49,7 +51,7 @@ const onSubmit = handleSubmit((values)=>{
             <form class="space-y-6" @submit.prevent="onSubmit">
                 <div>
                     <label for="email" class ="block text-sm font-medium leading-6 text-gray-900 ">Email address</label>
-                    <InputText v-model="email" type="email" placeholder="Enter your email address" :error="errors['email']" />
+                    <InputText v-model="email" type="text" placeholder="Enter your email address" :error="errors['email']" />
                 </div>
                 <div class="flex items-center justify-between">
                     <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
@@ -58,7 +60,7 @@ const onSubmit = handleSubmit((values)=>{
                     </div>
 
                 </div>
-               <InputText v-model="password" type="password" placeholder="Enter your password" :error="errors['password']"/>
+               <InputText v-model="password" type="text" placeholder="Enter your password" :error="errors['password']"/>
                 <div>
                     <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm 
                      
