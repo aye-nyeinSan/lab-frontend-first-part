@@ -7,7 +7,8 @@ import type { Organizer } from '@/types'
 export const  useAuthStore = defineStore('auth',{
     state:()=>({
         token: null as string | null,
-        user: null as Organizer | null
+        user: null as Organizer | null,
+        
     }),
     getters:{
         currentUserName(): string {

@@ -22,6 +22,7 @@ export interface EventState {
 export interface Organizer{
   id: number
   name: string
+  roles: string[]
 
 }
 export interface OrganizerState {

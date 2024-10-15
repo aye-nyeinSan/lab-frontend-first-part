@@ -4,16 +4,24 @@ import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from './stores/auth';
 import {useRouter} from 'vue-router'
+
+
 const authStore = useAuthStore()
 const router = useRouter()
+
 import { mdiAccount, mdiLogout } from '@mdi/js'
 import { mdiAccountPlus, mdiLogin } from '@mdi/js'
+
 const store = useMessageStore()
 const { message } = storeToRefs(store)
+
+//LogOut 
 function logout(){
   authStore.logout()
   router.push({name: 'login'})
 }
+
+
 const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
 if(token && user){
@@ -23,6 +31,9 @@ else {
   authStore.logout()
  
 }
+
+
+
 </script>
 
 <template>
@@ -64,7 +75,7 @@ else {
             <li class="nav-item px-2">
               <a class="nav-link hover:cursor-pointer" @click="logout">
                 <div class="flex items-center">
-                  <SvgIcon type="mdi" :path="mdiLogout" />
+                  <SvgIcon type="mdi" :path="mdiLogin" />
                   <span class="ml-3">LogOut</span>
                 </div>
               </a>
@@ -85,23 +96,29 @@ else {
             :to="{ name: 'about' }"
             >About</RouterLink
           >|
+          <span v-if="authStore.isAdmin">
+
           <RouterLink
             class="font-bold text-gray-700"
             exact-active-class="text-green-500"
             :to="{ name: 'add-event' }"
-            >New Event</RouterLink
-          >|  
+            >New Event</RouterLink>
+          </span>
+          |  
            <RouterLink
             class="font-bold text-gray-700"
             exact-active-class="text-green-500"
             :to="{ name: 'organizer-list-view' }"
             >Organizer</RouterLink>
             |  
-           <RouterLink
+            <span v-if="authStore.isAdmin">
+              <RouterLink
             class="font-bold text-gray-700"
             exact-active-class="text-green-500"
             :to="{ name: 'add-organizer' }"
             >Add Organizer</RouterLink>
+            </span>
+           
         </nav>
       </div>
     </header>
