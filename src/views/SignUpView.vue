@@ -18,19 +18,26 @@ const {errors, handleSubmit}= useForm({
     validationSchema,
     initialValues:{
         email:'',
-        password:''
+        password:'',
+        firstname:'',
+        lastname:'',
+        username:''
     }
 })
+const {value:firstname} = useField<string>('firstname')
+const {value:lastname} = useField<string>('lastname')
+const {value:username} = useField<string>('username')
 const {value:email} = useField<string>('email')
 const {value:password} = useField<string>('password')
+
 const router = useRouter();
 const onRegister = handleSubmit((values)=>{
-    console.log("Form submitted: ",values.email,values.password);
+    console.log("Form submitted: ",values.email,values.password,values.firstname,values.lastname,values.username);
     
-    authStore.login(values.email, values.password)
+    authStore.register(values.email, values.password,values.firstname,values.lastname,values.username)
     .then(()=>{
         console.log('Register successful');
-        router.push({name:'signup'})
+        router.push({name:'event-list-view'})
     })
     .catch((error)=>{
         messageStore.updateMessage('Register failed');
@@ -49,6 +56,18 @@ const onRegister = handleSubmit((values)=>{
         </div>
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form class="space-y-6" @submit.prevent="onRegister">
+             <div>
+                    <label for="firstname" class ="block text-sm font-medium leading-6 text-gray-900 ">Firstname</label>
+                    <InputText v-model="firstname" type="text" placeholder="Enter your email address" :error="errors['firstname']" />
+                </div>
+                 <div>
+                    <label for="lastname" class ="block text-sm font-medium leading-6 text-gray-900 ">Lastname</label>
+                    <InputText v-model="lastname" type="text" placeholder="Enter your email address" :error="errors['lastname']" />
+                </div>
+                 <div>
+                    <label for="username" class ="block text-sm font-medium leading-6 text-gray-900 ">Username</label>
+                    <InputText v-model="username" type="text" placeholder="Enter your email address" :error="errors['username']" />
+                </div>
                 <div>
                     <label for="email" class ="block text-sm font-medium leading-6 text-gray-900 ">Email address</label>
                     <InputText v-model="email" type="text" placeholder="Enter your email address" :error="errors['email']" />

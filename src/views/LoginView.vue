@@ -27,7 +27,7 @@ const router = useRouter();
 const onSubmit = handleSubmit((values)=>{
     console.log("Form submitted: ",values.email,values.password);
     
-    authStore.login(values.email, values.password)
+    authStore.login(values.email, values.password,)
     .then(()=>{
        // console.log('Login successful');
         router.push({name:'event-list-view'})

@@ -22,16 +22,41 @@ export const  useAuthStore = defineStore('auth',{
         }
     },
     actions:{
-          login(email: string, passsword: string){
-            console.log("enter into authStore Login:", email ," ", passsword);
+        login(email: string, passsword: string)
+        {
+            console.log("enter into authStore Login:", email ,", ", passsword);
+              return apiClient
+                .post('/api/v1/auth/authenticate', {
+                  email: email,
+                  password: passsword
+                })
+                .then((response) => {
+                  console.log('response from login:', response)
+                  this.token = response.data.access_token
+                  this.user = response.data.user
+                  console.log('token from Login:', this.token)
+                  console.log('user from user:', this.user)
+
+                  localStorage.setItem('access_token', this.token as string)
+                  localStorage.setItem('user', JSON.stringify(this.user))
+                  axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+                  return response
+                })
+
+        },
+          register(email: string, passsword: string,firstname: string, lastname: string, username:string){
+            console.log("enter into authStore Register:", email ," ,", passsword,", ", firstname," ,", lastname,", ", username);
             
-            return apiClient.post('/api/v1/auth/authenticate', {
-                username: email,
-                password: passsword
+            return apiClient.post('/api/v1/auth/register', {
+                email: email,
+                password: passsword,
+                firstname: firstname,
+                lastname: lastname,
+                username: username
             })
             .then
             (response => {
-                console.log("response from login:", response);
+                console.log("response from register:", response.data);
                 this.token = response.data.access_token
                 this.user = response.data.user
                 console.log("token from Login:", this.token);
